@@ -24,3 +24,36 @@ export function iniTable(db) {
         );`)
     })
 }
+
+
+/**
+ * 
+ * @param {sqlite.Database} db 
+ * @param {string} name 
+ * @param {number} price 
+ * @param {string} photo 
+ */
+export function insertProduct(db, name, price, photo) {
+    db.run('INSERT INTO product (photo,name,price) VALUES ($photo,$name,$price)', { $photo: photo, $name: name, $price: price }, (err) => {
+        if (err) {
+            throw err
+        }
+
+        console.log('product saved')
+    })
+}
+
+/**
+ * 
+ * @param {sqlite.Database} db 
+ */
+export function getProduct(db) {
+    db.get('SELECT * FROM product', (err, result) => {
+        if(err) {
+        console.log(err)
+        throw err
+        }
+        console.log(result)
+        return result
+    })
+}
