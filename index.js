@@ -1,3 +1,6 @@
+import dotenv from 'dotenv'
+dotenv.config()
+
 import express from 'express'
 import hbs from 'hbs'
 import path from 'path'
@@ -15,11 +18,11 @@ const app = express()
 const db = iniDatabase()
 iniTable(db)
 
-//app.set('view engine', 'hbs')
 app.set('views', __dirname + '/layouts')
 app.set('view engine', 'html')
 app.engine('html', hbs.__express)
 
+// Using file upload
 app.use(fileUpload())
 
 // Log incoming request
@@ -90,6 +93,7 @@ app.use((err, req, res, next) => {
     res.send(err.message)
 })
 
-app.listen(8000, () => {
-    console.log('App listen on port 8000')
+// Use port environment variable
+app.listen(process.env.PORT, () => {
+    console.log(`App listen on port ${process.env.PORT}`)
 })
