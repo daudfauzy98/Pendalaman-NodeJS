@@ -39,7 +39,7 @@ export function insertProduct(db, name, price, photo) {
             throw err
         }
 
-        console.log('product saved')
+        console.log('Product saved!')
     })
 }
 
