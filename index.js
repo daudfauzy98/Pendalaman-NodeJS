@@ -3,7 +3,7 @@ import hbs from 'hbs'
 import path from 'path'
 import morgan from 'morgan'
 import bodyParser from 'body-parser'
-import { iniDatabase, iniTable, insertProduct } from './database.js'
+import { getProduct, iniDatabase, iniTable, insertProduct } from './database.js'
 
 const __dirname = path.resolve()
 const app = express()
@@ -29,8 +29,28 @@ app.get('/', (req, res, next) => {
 })
 
 //Get product list
-app.get('/product', (req, res, nexxt) => {
-    res.render('product')
+app.get('/product', async (req, res, nexxt) => {
+    //const product = getProduct(db)
+    
+    /*getProduct(db).then(product => {
+        console.log('Product Result', product)
+        res.render('product')
+    }).catch(error => {
+        console.error(error)
+    })*/
+
+    /*const product = await getProduct(db)
+    console.log('Product Result', product)
+    res.render('product')*/
+
+    let products
+    try {
+        products = await getProduct(db)
+    } catch (error) {
+        return next(error)
+    }
+
+    res.render('product', { products })
 })
 
 // Handle from GET method
